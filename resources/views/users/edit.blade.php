@@ -3,13 +3,13 @@
 @section('content')
 
   <div class="text-center mb-4">
-    <h1>新規登録ページ</h1>
+    <h1>{{$user->name}}の編集ページ</h1>
   </div>
   
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      {!! Form::open(['route'=>'signup.post']) !!}
-        
+      {!! Form::model($user, ['route'=>['users.update', $user->id], 'method'=>'put']) !!}
+      
         <div class="form-group">
           {!! Form::label('name', 'お名前') !!}
           {!! Form::text('name', old('name'), ['class'=>'form-control']) !!}
@@ -22,24 +22,13 @@
         
         <div class="form-group">
           {!! Form::label('age', '生年月日') !!}
-          <p>{!! Form::date('age', old('age')) !!}</p>
+          {!! Form::date('age', old('age'), ['class'=>'form-control']) !!}
         </div>
         
-        <div class="form-group">
-          {!! Form::label('password', 'パスワード') !!}
-          {!! Form::password('password', ['class'=>'form-control']) !!}
-        </div>
-        
-        <div class="form-group">
-          {!! Form::label('password_confirmation', '確認用パスワード') !!}
-          {!! Form::password('password_confirmation', ['class'=>'form-control']) !!}
-        </div>
-        
-        {!! Form::submit('新規登録する', ['class'=>'btn btn-primary btn-block mt-3 mb-3']) !!}
+        {!! Form::submit('更新する', ['class'=>'btn btn-primary btn-block mt-3 mb-3']) !!}
         
       {!! Form::close() !!}
     </div>
   </div>
-  
 
 @endsection
