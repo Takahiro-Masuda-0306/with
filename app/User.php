@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'age', 'password'
+        'image', 'name', 'email', 'age', 'description', 'password'
     ];
 
     /**
@@ -32,7 +32,11 @@ class User extends Authenticatable
     }
     
     public function approvings() {
-        return $this->belongsToMany(Post::class, 'favorites', 'user_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'favorites', 'user_id', 'post_id')->withTimestamps();
+    }
+    
+    public function comments() {
+        return $this->belongsToMany(Post::class, 'comments', 'user_id', 'post_id')->withTimestamps();
     }
     
     public function approve($postId) {
@@ -61,5 +65,33 @@ class User extends Authenticatable
     
     public function is_approving($postId) {
         return $this->approvings()->where('post_id', $postId)->exists();
+    }
+    
+    public function comment($postId, $content) {
+        $exists = $this->is_commenting($postId);
+        
+        if($exists) {
+            return false;
+        }
+        else {
+            $this->comments()->attach($postId, ['content'=>$content]);
+            return true;
+        }
+    }
+    
+    public function uncomment($postId) {
+        $exists = $this->is_commenting($postId);
+        
+        if($exists) {
+            $this->comments()->detach($postId);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public function is_commenting($postId) {
+        return $this->comments()->where('post_id', $postId)->exists();
     }
 }

@@ -3,11 +3,7 @@
 @section('content')
   
   @if(Auth::check())
-  <div class="text-center mb-4">
-    <h1>最新の投稿</h1>
-  </div>
-  
-  <div class="post-wrapper">
+  <div class="mt-4">
     @include('posts.posts', ['posts'=>$posts])
   </div>
 

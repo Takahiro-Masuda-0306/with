@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
 {
-    public function store(Request $request, $id) {
+    public function store($id) {
         \Auth::user()->approve($id);
         return back();
     }

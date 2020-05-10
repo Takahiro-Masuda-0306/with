@@ -6,14 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Post;
 
+use App\Comment;
+
 class PostsController extends Controller
 {
     
     public function show($id) {
         $post = Post::find($id);
+        $comments = Comment::where('post_id', $id)->paginate(20);
         
         return view('posts.show', [
-           'post' => $post 
+           'post' => $post,
+           'comments' => $comments
         ]);
     }
     
@@ -26,6 +30,8 @@ class PostsController extends Controller
     }
     
     public function store(Request $request) {
+        $posts = $request->user()->posts()->paginate(20);
+        
         $this->validate($request, [
             'title' => 'required|max:20',
             'description' => 'required|max:300',
@@ -35,13 +41,14 @@ class PostsController extends Controller
         $path = $request->image->store('public');
         
         $request->user()->posts()->create([
-            'image' => $path,
+            'image' => basename($path),
             'title' => $request->title,
             'description' => $request->description,
         ]);
         
         return view('users.show', [
-           'user' => $request->user() 
+           'user' => $request->user(),
+           'posts' => $posts
         ]);
     }
     

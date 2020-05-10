@@ -15,7 +15,19 @@ class Post extends Model
     }
     
     public function approvers() {
-        return $this->belongsToMany(User::class, 'favorites', 'post_id', 'user_id');
+        return $this->belongsToMany(User::class, 'favorites', 'post_id', 'user_id')->withTimestamps();
+    }
+    
+    public function commenters() {
+        return $this->belongsToMany(User::class, 'comments', 'post_id', 'user_id')->withTimestamps();
+    }
+    
+    public function count_approvers() {
+        return $this->approvers()->count();
+    }
+    
+    public function count_commenters() {
+        return $this->commenters()->count();
     }
     
 }

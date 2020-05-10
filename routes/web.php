@@ -25,10 +25,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('posts', 'PostsController', ['only' => ['show', 'create', 'store', 'destroy']]);
     
     Route::group(['prefix' => 'users/{id}'], function() {
-        Route::post('approve', 'FavoritesController@store')->name('favorites.approve');
-        Route::delete('disapprove', 'FavoritesController@destroy')->name('favorites.disapprove');
+        Route::get('approve', 'FavoritesController@store')->name('favorites.approve');
+        Route::get('disapprove', 'FavoritesController@destroy')->name('favorites.disapprove');
+        Route::post('comment', 'CommentsController@store')->name('comments.store');
+        Route::get('uncomment', 'CommentsController@destroy')->name('comments.delete');
         Route::get('approvings', 'UsersController@approvings')->name('users.approvings');
-        Route::get('approvers', 'PostsController@approvers')->name('posts.approvers');
+        Route::get('commentings', 'UsersController@commentings')->name('users.commentings');
     });
 });
 

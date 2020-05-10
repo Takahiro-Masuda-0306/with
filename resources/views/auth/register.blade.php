@@ -8,7 +8,12 @@
   
   <div class="row">
     <div class="col-sm-6 offset-sm-3">
-      {!! Form::open(['route'=>'signup.post']) !!}
+      {!! Form::open(['route'=>['signup.post'], 'enctype' => 'multipart/form-data']) !!}
+        
+        <div class="form-group">
+          {!! Form::label('image', 'ユーザー画像') !!}
+          {!! Form::file('image', old('image'), ['class'=>'form-control']) !!}
+        </div>
         
         <div class="form-group">
           {!! Form::label('name', 'お名前') !!}
@@ -23,6 +28,11 @@
         <div class="form-group">
           {!! Form::label('age', '生年月日') !!}
           <p>{!! Form::date('age', old('age')) !!}</p>
+        </div>
+        
+        <div class="form-group">
+          {!! Form::label('description', '簡単な自己紹介') !!}
+          <p>{!! Form::textarea('description', old('description'), ['class'=>'form-control', 'rows'=>'5']) !!}</p>
         </div>
         
         <div class="form-group">
