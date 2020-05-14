@@ -4,11 +4,7 @@
 
   <div class="row pt-4 mb-4 pb-4">
     <div class="col-sm-8 offset-sm-2">
-      @if($user->image) 
-        <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ secure_asset('storage/' . $user->image) }}">
-      @else 
-        <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ secure_asset('storage/no-image.jpg') }}">
-      @endif
+      <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ secure_asset('storage/' . $user->image) }}">
       
       <h4 class="font-weight-bold mt-1 mb-1">{{$user->name}}</h4>      
       <span class="text-secondary">{{$user->age}}</span>

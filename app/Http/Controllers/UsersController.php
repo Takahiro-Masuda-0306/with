@@ -48,7 +48,7 @@ class UsersController extends Controller
         $posts = $user->posts()->paginate(20);
         
         $this->validate($request, [
-            
+            'image' => 'required',
             'description' => 'required|max:300',
         ]);
         
@@ -59,11 +59,7 @@ class UsersController extends Controller
         
         $data += $this->user_counts($user);
         
-        if($request->image) {
-            $path = $request->image->store('public');
-        } else {
-            $path = '';
-        }
+        $path = $request->image->store('public');
         
         if($user && (\Auth::id() === $user->id)) {
             $request->user()->update([

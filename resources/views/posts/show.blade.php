@@ -5,11 +5,7 @@
   <div class="pt-4 pb-4 bg-white rounded">
     <div class="row mb-3">
       <div class="col-sm-8 offset-sm-2">
-        @if($post->user->image) 
-          <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ secure_asset('storage/' . $post->user->image) }}">
-        @else 
-          <img class="rounded-circle img-fluid" width="100px" height="100px" src="{{ secure_asset('storage/no-image.jpg') }}">
-        @endif
+        <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ secure_asset('storage/' . $post->user->image) }}">
         <span class="mb-2 ml-2">{{ link_to_route('users.show', $post->user->name, ['id'=>$post->user_id]) }}</span>
       </div>
     </div>
