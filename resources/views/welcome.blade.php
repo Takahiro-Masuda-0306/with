@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  
+
   @if(Auth::check())
   <div class="mt-4">
     @include('posts.posts', ['posts'=>$posts])

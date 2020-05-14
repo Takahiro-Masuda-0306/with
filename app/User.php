@@ -68,27 +68,11 @@ class User extends Authenticatable
     }
     
     public function comment($postId, $content) {
-        $exists = $this->is_commenting($postId);
-        
-        if($exists) {
-            return false;
-        }
-        else {
-            $this->comments()->attach($postId, ['content'=>$content]);
-            return true;
-        }
+        $this->comments()->attach($postId, ['content'=>$content]);
     }
     
-    public function uncomment($postId) {
-        $exists = $this->is_commenting($postId);
-        
-        if($exists) {
-            $this->comments()->detach($postId);
-            return true;
-        }
-        else {
-            return false;
-        }
+    public function update_comment($postId, $content) {
+        $this->comments()->updateExistingPivot($postId, ['content' => $content]);
     }
     
     public function is_commenting($postId) {

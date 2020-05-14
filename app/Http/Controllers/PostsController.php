@@ -15,10 +15,16 @@ class PostsController extends Controller
         $post = Post::find($id);
         $comments = Comment::where('post_id', $id)->paginate(20);
         
-        return view('posts.show', [
-           'post' => $post,
-           'comments' => $comments
-        ]);
+        if($post) {
+            return view('posts.show', [
+                'post' => $post,
+                'comments' => $comments
+            ]);
+        }
+        else {
+            return redirect('/')->with('danger', '投稿が見つかりませんでした。');
+        }
+        
     }
     
     public function create() {
@@ -33,7 +39,7 @@ class PostsController extends Controller
         $posts = $request->user()->posts()->paginate(20);
         
         $this->validate($request, [
-            'title' => 'required|max:20',
+            'title' => 'required|max:30',
             'description' => 'required|max:300',
             'image' => 'required|image'
         ]);
@@ -46,30 +52,31 @@ class PostsController extends Controller
             'description' => $request->description,
         ]);
         
-        return view('users.show', [
-           'user' => $request->user(),
-           'posts' => $posts
-        ]);
+        $data = [
+            'user' => $request->user(),
+            'posts' => $posts
+        ];
+        
+        return redirect()->route('users.show', $data)->with('success', '投稿しました。');
     }
     
     public function destroy($id) {
         $post = Post::find($id);
         
         if($post && (\Auth::id() === $post->user_id)) {
+            $user = \Auth::user();
+            $posts = $user->posts()->paginate(20);
+        
+            $data = [
+                'user' => $user,
+                'posts' => $posts,
+            ];
+            
             $post->delete();
-            return back();
+            return redirect()->route('users.show', $data)->with('success', '投稿を削除しました。');
         } else {
-            return redirect('/');
+            return redirect('/')->with('danger', '投稿の削除に失敗しました。');
         }
     }
     
-    public function approvers($id) {
-        $user = User::find($id);
-        $approvers = $user->approvers()->paginate(10);
-        
-        return view('posts.approvers', [
-            'user' => $user,
-            'approvers' => $approvers
-        ]);
-    }
 }

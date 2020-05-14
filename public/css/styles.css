@@ -17,3 +17,17 @@ body {
   word-wrap:break-word;
 }
 
+.drop-area {
+  width: 350px;
+  height: 300px;
+  border: 2px dotted;
+  padding: 20px 20px;
+}
+
+.image_gallery {
+  transition: all 0.4s;
+}
+
+.image_gallery:hover {
+  transform: scale(1.1);
+}

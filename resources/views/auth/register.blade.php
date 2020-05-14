@@ -10,9 +10,13 @@
     <div class="col-sm-6 offset-sm-3">
       {!! Form::open(['route'=>['signup.post'], 'enctype' => 'multipart/form-data']) !!}
         
-        <div class="form-group">
+        <div class="form-group form-image">
           {!! Form::label('image', 'ユーザー画像') !!}
           {!! Form::file('image', old('image'), ['class'=>'form-control']) !!}
+        </div>
+        
+        <div class="prev-image mb-3 drop-area text-secondary small">
+          <p>ここにプレビューが表示されます。</p>
         </div>
         
         <div class="form-group">

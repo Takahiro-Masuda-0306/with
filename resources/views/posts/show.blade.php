@@ -10,9 +10,9 @@
         @else 
           <img class="rounded-circle img-fluid" width="100px" height="100px" src="{{ secure_asset('storage/no-image.jpg') }}">
         @endif
-        <span class="mb-2 ml-2">{{$post->user->name}}</span>
+        <span class="mb-2 ml-2">{{ link_to_route('users.show', $post->user->name, ['id'=>$post->user_id]) }}</span>
       </div>
-    </div>   
+    </div>
       
     <div class="row">
       <div class="col-sm-8 offset-sm-2">
@@ -25,6 +25,11 @@
       <div class="col-sm-8 offset-sm-2">
         <img class="rounded img-fluid" width="500px" height="500px" src="{{ secure_asset('storage/' . $post->image) }}">
         <p class="mb-3 mt-1">{{ $post->created_at }}</p>
+        
+        @if(\Auth::id() === $post->user_id) 
+          <p class="text-right"><a href="#" data-toggle="modal" data-target="#post_modal_{{ $post->id }}">削除する</a></p>
+          @include('commons.post_modal', ['post'=>$post])
+        @endif
       </div>
     </div>
     

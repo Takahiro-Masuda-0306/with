@@ -10,18 +10,23 @@
     <div class="col-sm-6 offset-sm-3">
       {!! Form::model($user, ['route'=>['users.update', $user->id], 'method'=>'put', 'enctype' => 'multipart/form-data']) !!}
       
-        <div class="form-group">
+        <div class="form-group form-image">
           <figure>
             @if($user->image) 
               <img class="rounded img-fluid" width="100px" height="100px" src="{{ secure_asset('storage/' . $user->image) }}">
-              <figcaption>現在のプロフィール画像</figcaption>
+              <figcaption class="text-secondary mt-1 small">現在のプロフィール画像</figcaption>
             @else 
               <img class="rounded img-fluid" width="100px" height="100px" src="{{ secure_asset('storage/no-image.jpg') }}">
+              <figcaption class="text-secondary mt-1 small">現在のプロフィール画像</figcaption>
             @endif
             
           </figure>
           {!! Form::label('image', 'ユーザー画像') !!}
           {!! Form::file('image', old('image'), ['class'=>'form-control']) !!}
+        </div>
+        
+        <div class="prev-image mb-3 drop-area text-secondary small">
+          <p>ここにプレビューが表示されます。</p>
         </div>
       
         <div class="form-group">

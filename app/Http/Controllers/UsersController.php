@@ -12,20 +12,21 @@ class UsersController extends Controller
 {
     public function show($id) {
         $user = User::find($id);
-        $posts = $user->posts()->paginate(20);
-        
-        $data = [
-          'user' => $user,
-          'posts' => $posts,
-        ];
-        
-        $data += $this->user_counts($user);
         
         if($user) {
-           return view('users.show', $data);
+            $posts = $user->posts()->orderBy('created_at', 'desc')->paginate(20);
+        
+            $data = [
+                'user' => $user,
+                'posts' => $posts,
+                ];
+        
+            $data += $this->user_counts($user);
+            
+            return view('users.show', $data);
         }
         else {
-            return redirect('/');
+            return redirect('/')->with('danger', 'ユーザーが見つかりませんでした');
         }
     }
     
@@ -45,6 +46,11 @@ class UsersController extends Controller
     public function update(Request $request, $id) {
         $user = User::find($id);
         $posts = $user->posts()->paginate(20);
+        
+        $this->validate($request, [
+            
+            'description' => 'required|max:300',
+        ]);
         
         $data = [
           'user' => $user,
@@ -68,10 +74,10 @@ class UsersController extends Controller
                 'description' => $request->description
             ]);
             
-            return view('users.show', $data)->with('success', '正常に更新されました。');
+            return redirect()->route('users.show', $data)->with('success', '正常に更新されました。');
         }
         else {
-            return redirect('/');
+            return redirect('/')->with('danger', '更新に失敗しました。');
         }
     }
     
