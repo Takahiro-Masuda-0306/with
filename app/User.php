@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Comment;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -68,7 +70,13 @@ class User extends Authenticatable
     }
     
     public function comment($postId, $content) {
-        $this->comments()->attach($postId, ['content'=>$content]);
+        if($this->is_commenting($postId)) {
+            return false;
+        }
+        else {
+            $this->comments()->attach($postId, ['content'=>$content]);
+            return true;
+        }
     }
     
     public function update_comment($postId, $content) {

@@ -15,9 +15,15 @@ class CommentsController extends Controller
         
         $content = $request->content;
         
-        \Auth::user()->comment($id, $content);
+        if(\Auth::user()->comment($id, $content)) {
+            return redirect()->back()->with('success', 'コメントを投稿しました。');
+        }
+        else {
+            return redirect()->back()->with('danger', 'コメントの投稿は各投稿で1件までできます。');
+        }
+        ;
         
-        return redirect()->back()->with('success', 'コメントを投稿しました。');
+        
         
     }
     
