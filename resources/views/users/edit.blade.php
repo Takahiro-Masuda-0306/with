@@ -12,14 +12,8 @@
       
         <div class="form-group form-image">
           <figure>
-            @if($user->image) 
-              <img class="rounded img-fluid" width="100px" height="100px" src="{{ secure_asset('storage/' . $user->image) }}">
-              <figcaption class="text-secondary mt-1 small">現在のプロフィール画像</figcaption>
-            @else 
-              <img class="rounded img-fluid" width="100px" height="100px" src="{{ secure_asset('storage/no-image.jpg') }}">
-              <figcaption class="text-secondary mt-1 small">現在のプロフィール画像</figcaption>
-            @endif
-            
+            <img class="rounded img-fluid" width="100px" height="100px" src="{{ $user->image }}">
+            <figcaption class="text-secondary mt-1 small">現在のプロフィール画像</figcaption>
           </figure>
           {!! Form::label('image', 'ユーザー画像') !!}
           {!! Form::file('image', old('image'), ['class'=>'form-control']) !!}

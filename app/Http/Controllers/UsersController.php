@@ -8,6 +8,8 @@ use App\User;
 
 use App\Comment;
 
+use Illuminate\Support\Facades\Storage;
+
 class UsersController extends Controller
 {
     public function show($id) {
@@ -59,11 +61,12 @@ class UsersController extends Controller
         
         $data += $this->user_counts($user);
         
-        $path = $request->image->store('public');
+        $image = $request->image;
+        $path = Storage::disk('s3')->putFile('' , $image, 'public');
         
         if($user && (\Auth::id() === $user->id)) {
             $request->user()->update([
-                'image' => basename($path),
+                'image' => Storage::disk('s3')->url($path),
                 'name' => $request->name,
                 'email' => $request->email,
                 'age' => $request->age,

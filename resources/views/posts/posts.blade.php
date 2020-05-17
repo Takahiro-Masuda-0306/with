@@ -6,7 +6,7 @@
     <li class="pt-4 pb-4 bg-white">
       <div class="row mb-3">
         <div class="col-sm-8 offset-sm-2">
-          <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ secure_asset('storage/' . $post->user->image) }}">
+          <img class="rounded-circle img-fluid" width="70px" height="70px" src="{{ $post->user->image }}">
           <span class="mb-2 ml-2">{{ link_to_route('users.show', $post->user->name, ['id'=>$post->user_id]) }}</span>
         </div>
       </div>   
@@ -20,7 +20,7 @@
         
       <div class="row mb-3 pb-3 border-bottom">
         <div class="col-sm-8 offset-sm-2">
-          <img class="rounded img-fluid image_gallery" width="500px" height="500px" src="{{ secure_asset('storage/' . $post->image) }}">
+          <img class="rounded img-fluid image_gallery" width="500px" height="500px" src="{{ $post->image }}">
           <p class="mb-3 mt-1">{{ $post->created_at }}</p>
           
           @if(\Auth::id() === $post->user_id) 

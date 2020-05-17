@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -64,8 +65,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $image = $data['image'];
+        
+        $path = Storage::disk('s3')->putFile('' , $image, 'public');
+        
         return User::create([
-            'image' => $data['image'],
+            'image' => Storage::disk('s3')->url($path),
             'name' => $data['name'],
             'email' => $data['email'],
             'age' => $data['age'],

@@ -8,6 +8,8 @@ use App\Post;
 
 use App\Comment;
 
+use Illuminate\Support\Facades\Storage;
+
 class PostsController extends Controller
 {
     
@@ -44,10 +46,12 @@ class PostsController extends Controller
             'image' => 'required|image'
         ]);
         
-        $path = $request->image->store('public');
+        $image = $request->file('image');
+        
+        $path = Storage::disk('s3')->putFile('' ,$image , 'public');
         
         $request->user()->posts()->create([
-            'image' => basename($path),
+            'image' => Storage::disk('s3')->url($path),
             'title' => $request->title,
             'description' => $request->description,
         ]);

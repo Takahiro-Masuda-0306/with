@@ -16,12 +16,7 @@
           <div class="col-sm-8 offset-sm-2 d-flex flex-row justify-content-between">
             
             <p class="text-secondary">
-              @if($comment->user->image) 
-                <img class="rounded-circle img-fluid mr-2" width="50px" height="50px" src="{{ secure_asset('storage/' . $comment->user->image) }}">
-              @else 
-                <img class="rounded-circle img-fluid mr-2" width="50px" height="50px" src="{{ secure_asset('storage/no-image.jpg') }}">
-              @endif
-              
+              <img class="rounded-circle img-fluid mr-2" width="50px" height="50px" src="{{ $comment->user->image }}">
               {{ $comment->user->name }}
             </p>
             <p class="text-secondary ml-4">{{ $comment->created_at }}</p>
